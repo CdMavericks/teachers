@@ -1,0 +1,291 @@
+/* ============================================================
+   GLOBAL THEME — DARK UI, INTER FONT
+============================================================ */
+
+:root {
+  --bg: #0f1724;
+  --bg-light: #172033;
+  --card: #0b1220;
+  --glass: rgba(255,255,255,0.04);
+  --border: rgba(255,255,255,0.06);
+  --muted: #94a3b8;
+  --text: #e6eef6;
+  --accent: #06b6d4;
+  --accent-dark: #0891b2;
+  --danger: #ff6961;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+body {
+  background: linear-gradient(180deg,#071022 0%,#071b2b 100%);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* Cards */
+.card {
+  background: var(--card);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
+/* Buttons */
+.btn, button {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.primary {
+  background: var(--accent);
+  color: #042028;
+}
+
+.danger {
+  background: var(--danger);
+  color: white;
+}
+
+.secondary {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+
+.text-muted {
+  color: var(--muted);
+}
+
+/* Inputs */
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* ============================================================
+   NAVBAR
+============================================================ */
+
+.navbar {
+  background: rgba(4, 6, 12, 0.50);
+  border-bottom: 1px solid var(--border);
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  backdrop-filter: blur(12px);
+}
+
+.nav-inner {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-title {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+/* ============================================================
+   LOGIN PAGE (index.html)
+============================================================ */
+
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 80px;
+}
+
+.login-card {
+  background: rgba(255,255,255,0.05);
+  padding: 28px;
+  border-radius: 12px;
+  text-align: center;
+  width: 380px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+}
+
+.google-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 16px;
+  border-radius: 10px;
+  border: none;
+  background: var(--accent);
+  color: #042028;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.error {
+  margin-top: 12px;
+  color: #ffb4b4;
+}
+
+/* ============================================================
+   PROFILE FORM (form.html)
+============================================================ */
+
+.form-container {
+  max-width: 800px;
+  margin: 28px auto;
+}
+
+.form-title {
+  margin-bottom: 6px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.form-label {
+  color: var(--muted);
+  font-size: 14px;
+  margin-top: 12px;
+}
+
+.row {
+  display: flex;
+  gap: 12px;
+}
+
+.col {
+  flex: 1;
+}
+
+/* ============================================================
+   CAMERA PAGE (upload.html)
+============================================================ */
+
+.camera-shell {
+  max-width: 880px;
+  margin: 22px auto;
+}
+
+.camera-circle {
+  width: 360px;
+  height: 360px;
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 0 auto;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.camera-circle video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.existing-img {
+  width: 260px;
+  height: 260px;
+  border-radius: 14px;
+  object-fit: cover;
+  display: block;
+  margin: 10px auto;
+  border: 1px solid var(--border);
+}
+
+/* ============================================================
+   DASHBOARD (dashboard.html)
+============================================================ */
+
+.dashboard-shell {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 12px;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.profile-photo {
+  width: 260px;
+  height: 260px;
+  border-radius: 14px;
+  object-fit: cover;
+  margin: 0 auto;
+}
+
+/* ============================================================
+   SIDEBAR (future-proof)
+============================================================ */
+
+.sidebar {
+  background: var(--card);
+  padding: 14px;
+  border-radius: 10px;
+}
+
+.sidebar button {
+  width: 100%;
+  background: transparent;
+  padding: 10px;
+  border-radius: 8px;
+  color: var(--muted);
+  border: none;
+  text-align: left;
+}
+
+.sidebar button:hover,
+.sidebar button.active {
+  background: rgba(6,182,212,0.08);
+  color: white;
+}
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+
+@media (max-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .camera-circle {
+    width: 280px;
+    height: 280px;
+  }
+
+  .login-card {
+    width: 90%;
+  }
+}
