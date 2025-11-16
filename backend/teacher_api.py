@@ -76,7 +76,7 @@ def get_todays_classes(teacher_id: int, fake_time: str = None):
             else:
                 parts = fake_time_clean.split(" ")
                 if len(parts) != 2:
-                    raise HTTPException(400, detail="fake_time must be 'Friday HH:MM' or 'YYYY-MM-DD'")
+                    raise HTTPException(400, detail="Time must be 'Friday HH:MM' or 'YYYY-MM-DD'")
 
                 weekday = parts[0].capitalize()
                 timestr = parts[1]
@@ -85,7 +85,7 @@ def get_todays_classes(teacher_id: int, fake_time: str = None):
                 try:
                     datetime.strptime(timestr, "%H:%M")
                 except:
-                    raise HTTPException(400, detail="Invalid time in fake_time (HH:MM)")
+                    raise HTTPException(400, detail="Invalid time in entered (HH:MM)")
         else:
             # Default to today if no fake_time
             now = datetime.now()
@@ -252,3 +252,4 @@ def revoke_attendance(class_id: int):
     except Exception as e:
         print("!!! ERROR /attendance/revoke:", e, file=sys.stderr)
         raise HTTPException(status_code=500, detail=str(e))
+
