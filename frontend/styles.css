@@ -1,0 +1,198 @@
+/* ------------------------------
+   GLOBAL RESET + BASE STYLES
+------------------------------ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Inter, system-ui, Arial, sans-serif;
+    background: #f5f6f8;
+    color: #111;
+    padding: 20px;
+}
+
+/* Headings */
+h1,
+h2,
+h3 {
+    margin-bottom: 12px;
+    font-weight: 700;
+    color: #111;
+}
+
+/* Containers */
+.card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    margin-bottom: 16px;
+}
+
+/* ------------------------------
+   BUTTONS
+------------------------------ */
+button,
+.btn {
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    background: #0366d6;
+    color: #fff;
+    font-size: 14px;
+    transition: 0.15s;
+}
+
+button:hover,
+.btn:hover {
+    background: #0251aa;
+}
+
+.btn.secondary {
+    background: #6c757d;
+}
+
+.btn.secondary:hover {
+    background: #565f65;
+}
+
+.small {
+    padding: 6px 10px;
+    font-size: 13px;
+}
+
+/* ------------------------------
+   INPUT FIELDS
+------------------------------ */
+input[type="email"],
+input[type="password"],
+input[type="time"],
+input[type="date"],
+select {
+    width: 260px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-bottom: 14px;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #0366d6;
+}
+
+/* ------------------------------
+   STUDENT CARDS (class.html)
+------------------------------ */
+.student_card {
+    padding: 14px;
+    margin: 10px 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+}
+
+/* ------------------------------
+   DASHBOARD LAYOUT HELPERS
+------------------------------ */
+.container {
+    max-width: 1100px;
+    margin: 20px auto;
+    display: flex;
+    gap: 16px;
+}
+
+.left {
+    flex: 1;
+}
+
+.right {
+    width: 320px;
+}
+
+/* Class rows */
+.class-row {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.class-row:hover {
+    background: #f0f0f0;
+}
+
+.class-now {
+    border-left: 4px solid #28a745;
+    padding-left: 10px;
+}
+
+/* ------------------------------
+   TABLE STYLING
+------------------------------ */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+}
+
+th,
+td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+tr:hover {
+    background: #f9f9f9;
+}
+
+/* Attendance status visuals */
+.status-verified {
+    background: #eaffea !important;
+}
+
+.status-partial {
+    background: #fff7db !important;
+}
+
+.status-unverified {
+    background: #ffeaea !important;
+}
+
+/* ------------------------------
+   HEADER (dashboard)
+------------------------------ */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+/* Centered login pages */
+body.login-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 80px;
+    max-width: 1100px;
+    margin: 30px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+    min-height: 80vh;
+}
+
+body.login-page h2 {
+    margin-bottom: 20px;
+}
