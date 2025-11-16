@@ -1,33 +1,141 @@
 <!doctype html>
 <html>
+
 <head>
   <meta charset="utf-8" />
   <title>Teacher Dashboard — ClassSight</title>
+  <link rel="stylesheet" href="styles.css" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
-    body { font-family: Inter, system-ui, Arial; margin: 18px; background:#f5f6f8; color:#111; }
-    header { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
-    .container { max-width:1100px; margin:18px auto; display:flex; gap:12px; }
-    .left { flex: 1; }
-    .right { width:320px; }
-    .card { background:#fff; border-radius:8px; padding:12px; box-shadow:0 6px 18px rgba(0,0,0,0.04); margin-bottom:12px; }
-    .class-row { padding:10px; border-bottom:1px solid #eee; cursor:pointer; display:flex; justify-content:space-between; align-items:center; }
-    .class-row:hover { background:#f7f7f7; }
-    .class-now { border-left:4px solid #28a745; padding-left:8px; }
-    .students { margin-top:12px; }
-    table { width:100%; border-collapse:collapse; }
-    th,td { padding:8px; border-bottom:1px solid #eee; text-align:left; }
-    .btn { padding:8px 12px; border-radius:6px; cursor:pointer; background:#0366d6; color:#fff; border:0; }
-    .btn.secondary { background:#6c757d; }
-    .small { font-size:13px; padding:6px 8px; border-radius:6px; }
-    .status-verified { background:#e6ffed; }
-    .status-partial { background:#fff8e6; }
-    .status-unverified { background:#ffeaea; }
-    label { display:block; margin-top:6px; font-weight:600; }
-    input[type="time"], select, input[type="date"] { width:100%; padding:6px; margin-top:6px; box-sizing:border-box; }
-    .dev-title { font-weight:700; margin-bottom:6px; }
+    body {
+      font-family: Inter, system-ui, Arial;
+      margin: 18px;
+      background: #f5f6f8;
+      color: #111;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 18px auto;
+      display: flex;
+      gap: 12px;
+    }
+
+    .left {
+      flex: 1;
+    }
+
+    .right {
+      width: 320px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 12px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+      margin-bottom: 12px;
+    }
+
+    .class-row {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .class-row:hover {
+      background: #f7f7f7;
+    }
+
+    .class-now {
+      border-left: 4px solid #28a745;
+      padding-left: 8px;
+    }
+
+    .students {
+      margin-top: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 8px;
+      border-bottom: 1px solid #eee;
+      text-align: left;
+    }
+
+    .btn {
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      background: #0366d6;
+      color: #fff;
+      border: 0;
+    }
+
+    .btn.secondary {
+      background: #bfc6cc;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      color: #1d1c1c;
+      border: 0;
+    }
+
+    .small {
+      font-size: 13px;
+      padding: 6px 8px;
+      border-radius: 6px;
+    }
+
+    .status-verified {
+      background: #e6ffed;
+    }
+
+    .status-partial {
+      background: #fff8e6;
+    }
+
+    .status-unverified {
+      background: #ffeaea;
+    }
+
+    label {
+      display: block;
+      margin-top: 6px;
+      font-weight: 600;
+    }
+
+    input[type="time"],
+    select,
+    input[type="date"] {
+      width: 100%;
+      padding: 6px;
+      margin-top: 6px;
+      box-sizing: border-box;
+    }
+
+    .dev-title {
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
   </style>
 </head>
+
 <body>
   <div style="max-width:1100px;margin:18px auto;">
     <header>
@@ -36,7 +144,7 @@
         <div id="teacherInfo" style="color:#444"></div>
       </div>
       <div>
-        <button id="refreshBtn" class="btn small">Refresh</button>
+        <button class="btn">Refresh</button>
         <button id="logout" class="btn small secondary" style="margin-left:8px">Logout</button>
       </div>
     </header>
@@ -67,8 +175,8 @@
 
     <div class="right">
       <div class="card">
-        <div class="dev-title">Developer / Test Panel</div>
-        <label>Fake Day</label>
+        <div class="dev-title">Class Control Panel</div>
+        <label>Day</label>
         <select id="fakeDay">
           <option>Sunday</option>
           <option>Monday</option>
@@ -79,246 +187,247 @@
           <option>Saturday</option>
         </select>
 
-        <label>Fake Time (HH:MM)</label>
+        <label>Time (HH:MM)</label>
         <input id="fakeTime" type="time" />
 
-        <label>Fake Date (optional)</label>
+        <label>Date (optional)</label>
         <input id="fakeDate" type="date" />
 
         <div style="margin-top:8px;">
-          <button id="applyFake" class="btn small">Apply Fake Time</button>
+          <button id="applyFake" class="btn small">Apply Time</button>
           <button id="clearFake" class="btn small secondary" style="margin-left:8px">Clear</button>
         </div>
 
         <hr style="margin:12px 0" />
 
         <div id="devNote" style="color:#444;font-size:13px">
-          Use this panel to open a class for testing and toggle CAM verification per-student.
+          Use this panel for cross checking purposes.
         </div>
       </div>
     </div>
   </div>
 
-<script>
-const API_ROOT = "http://127.0.0.1:8000";
+  <script>
+    const API_ROOT = "http://127.0.0.1:8000";
 
-function q(sel,p=document){return p.querySelector(sel)}
-function create(tag,props={},parent=null){const el=document.createElement(tag);Object.assign(el,props);if(parent)parent.appendChild(el);return el}
-function getQueryParam(name){return new URLSearchParams(window.location.search).get(name)}
+    function q(sel, p = document) { return p.querySelector(sel) }
+    function create(tag, props = {}, parent = null) { const el = document.createElement(tag); Object.assign(el, props); if (parent) parent.appendChild(el); return el }
+    function getQueryParam(name) { return new URLSearchParams(window.location.search).get(name) }
 
-let teacher = null;
-let classes = [];
-let activeClass = null;
-let studentsState = []; // {usn,name,status,cam1,cam2}
+    let teacher = null;
+    let classes = [];
+    let activeClass = null;
+    let studentsState = []; // {usn,name,status,cam1,cam2}
 
-const uid = getQueryParam("uid");
-if(!uid){ alert("No uid found in URL. Login first."); throw new Error("missing uid"); }
+    const uid = getQueryParam("uid");
+    if (!uid) { alert("No uid found in URL. Login first."); throw new Error("missing uid"); }
 
-async function fetchTeacherInfo(){
-  try{
-    const r = await fetch(`${API_ROOT}/teacher/info?firebase_uid=${encodeURIComponent(uid)}`);
-    if(r.status===404){ q("#classesList").innerText = "Teacher not found in DB."; return null; }
-    const j = await r.json();
-    return j;
-  }catch(e){
-    console.error(e);
-    q("#classesList").innerText = "Backend unreachable.";
-    return null;
-  }
-}
-
-function getFakeQuery(){
-  // build fake_time param if set
-  const day = q("#fakeDay").value;
-  const time = q("#fakeTime").value; // "HH:MM"
-  const date = q("#fakeDate").value; // "YYYY-MM-DD"
-  if(date) return { fake_time: date }; // backend will treat as date
-  if(day && time) return { fake_time: `${day} ${time}` };
-  if(day) return { fake_time: `${day} 00:00` };
-  return {};
-}
-
-async function loadClasses(){
-  q("#classesList").innerText = "Loading classes...";
-  const params = getFakeQuery();
-  const paramStr = new URLSearchParams({ teacher_id: teacher.teacher_id, ...(params.fake_time?{ fake_time: params.fake_time }:{}) }).toString();
-  try{
-    const r = await fetch(`${API_ROOT}/teacher/classes?${paramStr}`);
-    if(!r.ok){ q("#classesList").innerText = "Failed to load classes."; return; }
-    classes = await r.json();
-    renderClasses();
-  }catch(e){
-    console.error(e);
-    q("#classesList").innerText = "Network error loading classes.";
-  }
-}
-
-function renderClasses(){
-  const list = q("#classesList");
-  list.innerHTML = "";
-  if(!Array.isArray(classes) || classes.length===0){ list.innerText = "No classes assigned for today."; return; }
-  classes.forEach(c=>{
-    const row = create("div", { className: "class-row" }, list);
-    if(c.is_now) row.className += " class-now";
-    row.innerHTML = `<div><strong>${c.subject}</strong> — <em>${c.section}</em></div><div style="font-size:13px;color:#666">${c.weekday} ${c.start_time.slice(0,5)} - ${c.end_time.slice(0,5)}</div>`;
-    row.onclick = ()=> openClass(c);
-  });
-}
-
-async function openClass(c){
-  activeClass = c;
-  q("#classPanel").style.display = "block";
-  q("#classHeading").innerText = `${c.subject} — ${c.section}`;
-  q("#classMeta").innerText = `Class ID: ${c.class_id}`;
-  q("#saveMsg").innerText = "";
-
-  q("#studentsArea").innerHTML = "<div id='studentsLoading'>Loading students...</div>";
-
-  // Get the fake date from your dev panel if it exists, otherwise backend defaults to today
-  const fakeDate = q("#fakeDate").value; 
-  const dateParam = fakeDate ? `&date_str=${fakeDate}` : "";
-
-  try{
-    const r = await fetch(`${API_ROOT}/teacher/class/students?class_id=${c.class_id}${dateParam}`);    if(!r.ok){ q("#studentsArea").innerText = "Failed to load students."; return; }
-    
-    const payload = await r.json();
-    const studs = payload.students || [];
-
-    // MAP THE STATUS FROM DB
-    // If DB says "Present", we set it. If DB was null (backend sends 'Absent'), we use 'Absent'.
-    studentsState = studs.map(s => ({ 
-        student_usn: s.usn, 
-        student_name: s.student_name, 
-        status: s.current_status, // <--- CRITICAL CHANGE
-        cam1: false, 
-        cam2: false 
-    }));
-    
-    renderStudents();
-  }catch(e){
-    console.error(e);
-    q("#studentsArea").innerText = "Network error loading students.";
-  }
-}
-function renderStudents(){
-  const area = q("#studentsArea");
-  area.innerHTML = "";
-  if(!studentsState || studentsState.length===0){ area.innerText = "No students in this section."; return; }
-  const table = create("table", {}, area);
-  const thead = create("thead", {}, table);
-  thead.innerHTML = "<tr><th>USN</th><th>Name</th><th>CAM1</th><th>CAM2</th><th>Status</th></tr>";
-  const tbody = create("tbody", {}, table);
-
-  studentsState.forEach((s, idx) => {
-    const tr = create("tr", {}, tbody);
-    tr.innerHTML = `<td>${s.student_usn}</td><td>${s.student_name}</td><td></td><td></td><td></td>`;
-    const cam1Cell = tr.children[2];
-    const cam2Cell = tr.children[3];
-    const statusCell = tr.children[4];
-
-    const cam1Btn = create("button", { innerText: "CAM1", className:"small" }, cam1Cell);
-    cam1Btn.onclick = ()=> { studentsState[idx].cam1 = !studentsState[idx].cam1; applyVerificationRules(idx); renderStudents(); };
-
-    const cam2Btn = create("button", { innerText: "CAM2", className:"small", style:"margin-left:8px" }, cam2Cell);
-    cam2Btn.onclick = ()=> { studentsState[idx].cam2 = !studentsState[idx].cam2; applyVerificationRules(idx); renderStudents(); };
-
-    // status buttons
-    const presentBtn = create("button", { innerText: "Present", className:"btn small" }, statusCell);
-    presentBtn.onclick = ()=> { studentsState[idx].status = "Present"; renderStudents(); };
-    const absentBtn = create("button", { innerText: "Absent", className:"btn small secondary", style:"margin-left:8px" }, statusCell);
-    absentBtn.onclick = ()=> { studentsState[idx].status = "Absent"; renderStudents(); };
-
-    // visual highlight and initial state
-    function applyVisual(){
-      // color row based on verification
-      if(s.cam1 && s.cam2){
-        tr.className = "status-verified";
-        if(s.status !== "Present") s.status = "Present";
-      } else if(s.cam1 || s.cam2){
-        tr.className = "status-partial";
-        // do not auto set Present
-      } else {
-        tr.className = "status-unverified";
+    async function fetchTeacherInfo() {
+      try {
+        const r = await fetch(`${API_ROOT}/teacher/info?firebase_uid=${encodeURIComponent(uid)}`);
+        if (r.status === 404) { q("#classesList").innerText = "Teacher not found in DB."; return null; }
+        const j = await r.json();
+        return j;
+      } catch (e) {
+        console.error(e);
+        q("#classesList").innerText = "Backend unreachable.";
+        return null;
       }
     }
-    applyVisual();
 
-    // set button styles to reflect toggles
-    cam1Btn.style.opacity = s.cam1 ? "1" : "0.55";
-    cam2Btn.style.opacity = s.cam2 ? "1" : "0.55";
-    presentBtn.style.opacity = s.status === "Present" ? "1" : "0.6";
-    absentBtn.style.opacity = s.status === "Absent" ? "1" : "0.6";
-  });
-}
+    function getFakeQuery() {
+      // build fake_time param if set
+      const day = q("#fakeDay").value;
+      const time = q("#fakeTime").value; // "HH:MM"
+      const date = q("#fakeDate").value; // "YYYY-MM-DD"
+      if (date) return { fake_time: date }; // backend will treat as date
+      if (day && time) return { fake_time: `${day} ${time}` };
+      if (day) return { fake_time: `${day} 00:00` };
+      return {};
+    }
 
-function applyVerificationRules(idx){
-  const s = studentsState[idx];
-  if(s.cam1 && s.cam2){
-    s.status = "Present";
-  }
-  // leave other combos manual
-}
+    async function loadClasses() {
+      q("#classesList").innerText = "Loading classes...";
+      const params = getFakeQuery();
+      const paramStr = new URLSearchParams({ teacher_id: teacher.teacher_id, ...(params.fake_time ? { fake_time: params.fake_time } : {}) }).toString();
+      try {
+        const r = await fetch(`${API_ROOT}/teacher/classes?${paramStr}`);
+        if (!r.ok) { q("#classesList").innerText = "Failed to load classes."; return; }
+        classes = await r.json();
+        renderClasses();
+      } catch (e) {
+        console.error(e);
+        q("#classesList").innerText = "Network error loading classes.";
+      }
+    }
 
-q("#applyFake").onclick = async ()=>{
-  // apply fake params then reload classes
-  await loadClasses();
-};
+    function renderClasses() {
+      const list = q("#classesList");
+      list.innerHTML = "";
+      if (!Array.isArray(classes) || classes.length === 0) { list.innerText = "No classes assigned for today."; return; }
+      classes.forEach(c => {
+        const row = create("div", { className: "class-row" }, list);
+        if (c.is_now) row.className += " class-now";
+        row.innerHTML = `<div><strong>${c.subject}</strong> — <em>${c.section}</em></div><div style="font-size:13px;color:#666">${c.weekday} ${c.start_time.slice(0, 5)} - ${c.end_time.slice(0, 5)}</div>`;
+        row.onclick = () => openClass(c);
+      });
+    }
 
-q("#clearFake").onclick = ()=>{
-  q("#fakeDay").value = new Date().toLocaleDateString('en-US', { weekday: 'long' });
-  q("#fakeTime").value = "";
-  q("#fakeDate").value = "";
-  loadClasses();
-};
+    async function openClass(c) {
+      activeClass = c;
+      q("#classPanel").style.display = "block";
+      q("#classHeading").innerText = `${c.subject} — ${c.section}`;
+      q("#classMeta").innerText = `Class ID: ${c.class_id}`;
+      q("#saveMsg").innerText = "";
 
-q("#refreshBtn").onclick = ()=> loadClasses();
+      q("#studentsArea").innerHTML = "<div id='studentsLoading'>Loading students...</div>";
 
-q("#revokeAttendance").onclick = async ()=>{
-  if(!activeClass){ alert("Open a class first"); return; }
-  const ok = confirm("Revoke today's attendance for this class?");
-  if(!ok) return;
-  const body = { class_id: activeClass.class_id };
-  try{
-    const r = await fetch(`${API_ROOT}/attendance/revoke`, {
-      method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify(body)
-    });
-    const j = await r.json();
-    if(r.ok) { q("#saveMsg").innerText = `Revoked ${j.deleted} rows for ${j.date}`; }
-    else { q("#saveMsg").innerText = "Revoke failed: " + (j.detail||JSON.stringify(j)); }
-  }catch(e){
-    console.error(e); q("#saveMsg").innerText = "Revoke failed (network).";
-  }
-};
+      // Get the fake date from your dev panel if it exists, otherwise backend defaults to today
+      const fakeDate = q("#fakeDate").value;
+      const dateParam = fakeDate ? `&date_str=${fakeDate}` : "";
 
-q("#saveAttendance").onclick = async ()=>{
-  if(!activeClass){ alert("Open a class first"); return; }
-  // payload
-  const dateInput = q("#fakeDate").value;
-  const payload = { class_id: activeClass.class_id, date: dateInput || undefined, records: studentsState.map(s => ({ student_usn: s.student_usn, status: s.status })) };
-  q("#saveMsg").innerText = "Saving...";
-  try{
-    const r = await fetch(`${API_ROOT}/attendance/mark`, {
-      method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify(payload)
-    });
-    const j = await r.json();
-    if(r.ok){ q("#saveMsg").innerText = `Saved (${j.rows} rows) for ${j.date}`; }
-    else{ q("#saveMsg").innerText = "Save failed: " + (j.detail || JSON.stringify(j)); }
-  }catch(e){
-    console.error(e); q("#saveMsg").innerText = "Save failed (network).";
-  }
-};
+      try {
+        const r = await fetch(`${API_ROOT}/teacher/class/students?class_id=${c.class_id}${dateParam}`); if (!r.ok) { q("#studentsArea").innerText = "Failed to load students."; return; }
 
-// initialization
-(async function init(){
-  teacher = await fetchTeacherInfo();
-  if(!teacher) return;
-  q("#teacherInfo").innerText = `${teacher.name} (${teacher.email})`;
-  q("#title").innerText = `Welcome, ${teacher.name}`;
-  // set fakeDay default to current weekday
-  const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
-  q("#fakeDay").value = today;
-  await loadClasses();
-})();
-</script>
+        const payload = await r.json();
+        const studs = payload.students || [];
+
+        // MAP THE STATUS FROM DB
+        // If DB says "Present", we set it. If DB was null (backend sends 'Absent'), we use 'Absent'.
+        studentsState = studs.map(s => ({
+          student_usn: s.usn,
+          student_name: s.student_name,
+          status: s.current_status, // <--- CRITICAL CHANGE
+          cam1: false,
+          cam2: false
+        }));
+
+        renderStudents();
+      } catch (e) {
+        console.error(e);
+        q("#studentsArea").innerText = "Network error loading students.";
+      }
+    }
+    function renderStudents() {
+      const area = q("#studentsArea");
+      area.innerHTML = "";
+      if (!studentsState || studentsState.length === 0) { area.innerText = "No students in this section."; return; }
+      const table = create("table", {}, area);
+      const thead = create("thead", {}, table);
+      thead.innerHTML = "<tr><th>USN</th><th>Name</th><th>CAM1</th><th>CAM2</th><th>Status</th></tr>";
+      const tbody = create("tbody", {}, table);
+
+      studentsState.forEach((s, idx) => {
+        const tr = create("tr", {}, tbody);
+        tr.innerHTML = `<td>${s.student_usn}</td><td>${s.student_name}</td><td></td><td></td><td></td>`;
+        const cam1Cell = tr.children[2];
+        const cam2Cell = tr.children[3];
+        const statusCell = tr.children[4];
+
+        const cam1Btn = create("button", { innerText: "CAM1", className: "small" }, cam1Cell);
+        cam1Btn.onclick = () => { studentsState[idx].cam1 = !studentsState[idx].cam1; applyVerificationRules(idx); renderStudents(); };
+
+        const cam2Btn = create("button", { innerText: "CAM2", className: "small", style: "margin-left:8px" }, cam2Cell);
+        cam2Btn.onclick = () => { studentsState[idx].cam2 = !studentsState[idx].cam2; applyVerificationRules(idx); renderStudents(); };
+
+        // status buttons
+        const presentBtn = create("button", { innerText: "Present", className: "btn small" }, statusCell);
+        presentBtn.onclick = () => { studentsState[idx].status = "Present"; renderStudents(); };
+        const absentBtn = create("button", { innerText: "Absent", className: "btn small secondary", style: "margin-left:8px" }, statusCell);
+        absentBtn.onclick = () => { studentsState[idx].status = "Absent"; renderStudents(); };
+
+        // visual highlight and initial state
+        function applyVisual() {
+          // color row based on verification
+          if (s.cam1 && s.cam2) {
+            tr.className = "status-verified";
+            if (s.status !== "Present") s.status = "Present";
+          } else if (s.cam1 || s.cam2) {
+            tr.className = "status-partial";
+            // do not auto set Present
+          } else {
+            tr.className = "status-unverified";
+          }
+        }
+        applyVisual();
+
+        // set button styles to reflect toggles
+        cam1Btn.style.opacity = s.cam1 ? "1" : "0.55";
+        cam2Btn.style.opacity = s.cam2 ? "1" : "0.55";
+        presentBtn.style.opacity = s.status === "Present" ? "1" : "0.6";
+        absentBtn.style.opacity = s.status === "Absent" ? "1" : "0.6";
+      });
+    }
+
+    function applyVerificationRules(idx) {
+      const s = studentsState[idx];
+      if (s.cam1 && s.cam2) {
+        s.status = "Present";
+      }
+      // leave other combos manual
+    }
+
+    q("#applyFake").onclick = async () => {
+      // apply fake params then reload classes
+      await loadClasses();
+    };
+
+    q("#clearFake").onclick = () => {
+      q("#fakeDay").value = new Date().toLocaleDateString('en-US', { weekday: 'long' });
+      q("#fakeTime").value = "";
+      q("#fakeDate").value = "";
+      loadClasses();
+    };
+
+    q("#refreshBtn").onclick = () => loadClasses();
+
+    q("#revokeAttendance").onclick = async () => {
+      if (!activeClass) { alert("Open a class first"); return; }
+      const ok = confirm("Revoke today's attendance for this class?");
+      if (!ok) return;
+      const body = { class_id: activeClass.class_id };
+      try {
+        const r = await fetch(`${API_ROOT}/attendance/revoke`, {
+          method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body)
+        });
+        const j = await r.json();
+        if (r.ok) { q("#saveMsg").innerText = `Revoked ${j.deleted} rows for ${j.date}`; }
+        else { q("#saveMsg").innerText = "Revoke failed: " + (j.detail || JSON.stringify(j)); }
+      } catch (e) {
+        console.error(e); q("#saveMsg").innerText = "Revoke failed (network).";
+      }
+    };
+
+    q("#saveAttendance").onclick = async () => {
+      if (!activeClass) { alert("Open a class first"); return; }
+      // payload
+      const dateInput = q("#fakeDate").value;
+      const payload = { class_id: activeClass.class_id, date: dateInput || undefined, records: studentsState.map(s => ({ student_usn: s.student_usn, status: s.status })) };
+      q("#saveMsg").innerText = "Saving...";
+      try {
+        const r = await fetch(`${API_ROOT}/attendance/mark`, {
+          method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload)
+        });
+        const j = await r.json();
+        if (r.ok) { q("#saveMsg").innerText = `Saved (${j.rows} rows) for ${j.date}`; }
+        else { q("#saveMsg").innerText = "Save failed: " + (j.detail || JSON.stringify(j)); }
+      } catch (e) {
+        console.error(e); q("#saveMsg").innerText = "Save failed (network).";
+      }
+    };
+
+    // initialization
+    (async function init() {
+      teacher = await fetchTeacherInfo();
+      if (!teacher) return;
+      q("#teacherInfo").innerText = `${teacher.name} (${teacher.email})`;
+      q("#title").innerText = `Welcome, ${teacher.name}`;
+      // set fakeDay default to current weekday
+      const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
+      q("#fakeDay").value = today;
+      await loadClasses();
+    })();
+  </script>
 </body>
+
 </html>
