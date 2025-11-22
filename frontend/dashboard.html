@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <title>Teacher Dashboard — ClassSight</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="styles.css">
   <style>
     body { font-family: Inter, system-ui, Arial; margin: 18px; background:#f5f6f8; color:#111; }
     header { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
@@ -57,11 +58,14 @@
           <div id="studentsLoading">Select a class to load students</div>
         </div>
 
-        <div style="margin-top:10px; display:flex; gap:10px; align-items:center;">
+        <div style="margin-top:10px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
           <button id="saveAttendance" class="btn">Save Attendance</button>
           <button id="revokeAttendance" class="btn secondary">Revoke All</button>
+          <button id="finalizeAttendance" class="btn" style="background:#28a745">Finalize</button>
+
           <span id="saveMsg" style="margin-left:12px"></span>
         </div>
+
       </div>
     </div>
 
@@ -100,6 +104,22 @@
   </div>
 
 <script>
+
+
+async function checkFileExists(url) {
+    try {
+        const res = await fetch(url, { method: 'HEAD' });
+        return res.ok;
+    } catch {
+        return false;
+    }
+}
+
+function openCam1Preview(usn) {
+    const url = `http://127.0.0.1:8000/static/cam1/${usn}.jpg`;
+    window.open(url, "_blank");
+}
+
 const API_ROOT = "http://127.0.0.1:8000";
 
 function q(sel,p=document){return p.querySelector(sel)}
@@ -184,15 +204,15 @@ async function openClass(c){
     const payload = await r.json();
     const studs = payload.students || [];
 
-    // MAP THE STATUS FROM DB
-    // If DB says "Present", we set it. If DB was null (backend sends 'Absent'), we use 'Absent'.
-    studentsState = studs.map(s => ({ 
-        student_usn: s.usn, 
-        student_name: s.student_name, 
-        status: s.current_status, // <--- CRITICAL CHANGE
-        cam1: false, 
-        cam2: false 
+    studentsState = studs.map(s => ({
+        student_usn: s.usn.toUpperCase(),
+        student_name: s.student_name,
+        status: s.current_status,
+        cam1: s.cam1_present === 1,
+        cam2: s.cam2_present === 1
     }));
+
+
     
     renderStudents();
   }catch(e){
@@ -217,7 +237,20 @@ function renderStudents(){
     const statusCell = tr.children[4];
 
     const cam1Btn = create("button", { innerText: "CAM1", className:"small" }, cam1Cell);
-    cam1Btn.onclick = ()=> { studentsState[idx].cam1 = !studentsState[idx].cam1; applyVerificationRules(idx); renderStudents(); };
+
+    cam1Btn.onclick = async () => {
+        const usn = studentsState[idx].student_usn;
+
+        const imgUrl = `http://127.0.0.1:8000/static/cam1/${usn}.jpg`;
+        const exists = await checkFileExists(imgUrl);
+
+        if (exists) {
+            openCam1Preview(usn);
+        } else {
+            alert("No CAM1 image available for this student.");
+        }
+    };
+
 
     const cam2Btn = create("button", { innerText: "CAM2", className:"small", style:"margin-left:8px" }, cam2Cell);
     cam2Btn.onclick = ()=> { studentsState[idx].cam2 = !studentsState[idx].cam2; applyVerificationRules(idx); renderStudents(); };
@@ -271,6 +304,45 @@ q("#clearFake").onclick = ()=>{
   loadClasses();
 };
 
+
+
+q("#finalizeAttendance").onclick = async () => {
+    if (!activeClass) {
+        alert("Open a class first");
+        return;
+    }
+
+    const ok = confirm("After finalizing, no changes can be made. Continue?");
+    if (!ok) return;
+
+    const payload = {
+        class_id: activeClass.class_id,
+        teacher_id: teacher.teacher_id
+    };
+
+    try {
+        const r = await fetch(`${API_ROOT}/teacher/attendance/finalize`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(payload)
+        });
+
+        const j = await r.json();
+
+        if (r.ok) {
+            alert(`Finalized attendance for ${j.date}\nRows: ${j.rows}`);
+        } else {
+            alert("Finalize failed: " + (j.detail || JSON.stringify(j)));
+        }
+    } catch (e) {
+        alert("Network error");
+    }
+};
+
+
+
+
+
 q("#refreshBtn").onclick = ()=> loadClasses();
 
 q("#revokeAttendance").onclick = async ()=>{
@@ -279,7 +351,7 @@ q("#revokeAttendance").onclick = async ()=>{
   if(!ok) return;
   const body = { class_id: activeClass.class_id };
   try{
-    const r = await fetch(`${API_ROOT}/attendance/revoke`, {
+    const r = await fetch(`${API_ROOT}/teacher/attendance/revoke`, {
       method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify(body)
     });
     const j = await r.json();
@@ -294,10 +366,14 @@ q("#saveAttendance").onclick = async ()=>{
   if(!activeClass){ alert("Open a class first"); return; }
   // payload
   const dateInput = q("#fakeDate").value;
-  const payload = { class_id: activeClass.class_id, date: dateInput || undefined, records: studentsState.map(s => ({ student_usn: s.student_usn, status: s.status })) };
+  const payload = { class_id: activeClass.class_id, date: dateInput || undefined, records: studentsState.map(s => ({
+    student_usn: s.student_usn.toUpperCase(),
+    status: s.status
+}))
+ };
   q("#saveMsg").innerText = "Saving...";
   try{
-    const r = await fetch(`${API_ROOT}/attendance/mark`, {
+    const r = await fetch(`${API_ROOT}/teacher/attendance/mark`, {
       method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify(payload)
     });
     const j = await r.json();
